@@ -89,14 +89,10 @@ export default defineConfig({
   favicons: ['https://gw.alipayobjects.com/zos/rmsportal/rlpTLlbMzTNYuZGGCVYM.png'],
   styles: [alibabaSansFontFaceStyle],
   resolve: {
-    docDirs: [{ type: 'doc', dir: 'docs' }],
     atomDirs: [{ type: 'component', dir: 'components' }],
     codeBlockMode: 'passive',
   },
-  locales: [
-    { id: 'en-US', name: 'English', suffix: '' },
-    { id: 'zh-CN', name: '中文', suffix: '-cn' },
-  ],
+  locales: [{ id: 'en-US', name: 'English', suffix: '' }],
   define: {
     antdReproduceVersion: version,
   },
@@ -132,62 +128,7 @@ export default defineConfig({
       type: 'font/woff2',
       crossorigin: 'anonymous',
     })),
-  headScripts: [
-    `
-    (function () {
-      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
-      const pathname = location.pathname;
-
-      function isZhCN(pathname) {
-        return /-cn\\/?$/.test(pathname);
-      }
-      function getLocalizedPathname(path, zhCN) {
-        const pathname = path.indexOf('/') === 0 ? path : '/' + path;
-        if (!zhCN) {
-          // to enUS
-          return /\\/?index(-cn)?/.test(pathname) ? '/' : pathname.replace('-cn', '');
-        } else if (pathname === '/') {
-          return '/index-cn';
-        } else if (pathname.endsWith('/')) {
-          return pathname.replace(/\\/$/, '-cn/');
-        }
-        return pathname + '-cn';
-      }
-
-      // 兼容旧的 URL， \`?locale=...\`
-      const queryString = location.search;
-      if (queryString) {
-        const isZhCNConfig = queryString.indexOf('zh-CN') > -1;
-        if (isZhCNConfig && !isZhCN(pathname)) {
-          location.pathname = getLocalizedPathname(pathname, isZhCNConfig);
-        }
-      }
-
-      // 首页无视链接里面的语言设置 https://github.com/ant-design/ant-design/issues/4552
-      const normalizedPathname = pathname || '/';
-      if (normalizedPathname === '/' || normalizedPathname === '/index-cn') {
-        let lang;
-        if (window.localStorage) {
-          const antLocale = localStorage.getItem('ANT_LOCAL_TYPE_KEY');
-          // 尝试解析 JSON，因为可能是被序列化后存储的 "en-US" / en-US https://github.com/ant-design/ant-design/issues/56606
-          try {
-            lang = antLocale ? JSON.parse(antLocale) : localStorage.getItem('locale');
-          } catch (e) {
-            lang = antLocale ? antLocale : localStorage.getItem('locale');
-          }
-        }
-        lang = lang || ((navigator.language || navigator.browserLanguage).toLowerCase() === 'zh-cn'
-            ? 'zh-CN'
-            : 'en-US');
-        // safari is 'zh-cn', while other browser is 'zh-CN';
-        if ((lang === 'zh-CN') !== isZhCN(normalizedPathname)) {
-          location.pathname = getLocalizedPathname(normalizedPathname, lang === 'zh-CN');
-        }
-      }
-      document.documentElement.className += isZhCN(normalizedPathname) ? 'zh-cn' : 'en-us';
-    })();
-    `,
-  ],
+  headScripts: [`document.documentElement.className += 'en-us';`],
   scripts: [
     {
       async: true,

@@ -1,42 +1,26 @@
 import React, { Suspense, useState } from 'react';
 import { theme } from 'antd';
-import { createStaticStyles } from 'antd-style';
 
 import useLocale from '../../hooks/useLocale';
 import LazyPromptDrawer from '../../theme/common/ThemeSwitch/LazyPromptDrawer';
 import SiteContext from '../../theme/slots/SiteContext';
 import type { SiteContextProps } from '../../theme/slots/SiteContext';
-import { DarkContext } from './../../hooks/useDark';
 import BannerRecommends from './components/BannerRecommends';
 import Group from './components/Group';
 import PreviewBanner from './components/PreviewBanner';
 import ThemePreview from './components/ThemePreview';
 
 const ComponentsList = React.lazy(() => import('./components/ComponentsList'));
-const DesignFramework = React.lazy(() => import('./components/DesignFramework'));
 // const Theme = React.lazy(() => import('./components/Theme'));
-
-const classNames = createStaticStyles(({ css }) => ({
-  image: css`
-    position: absolute;
-    inset-inline-start: 0;
-    top: -50px;
-    height: 160px;
-  `,
-}));
 
 const locales = {
   cn: {
     assetsTitle: '组件丰富，选用自如',
     assetsDesc: '大量实用组件满足你的需求，灵活定制与拓展',
-    designTitle: '设计语言与研发框架',
-    designDesc: '配套生态，让你快速搭建网站应用',
   },
   en: {
     assetsTitle: 'Rich components',
     assetsDesc: 'Practical components to meet your needs, flexible customization and expansion',
-    designTitle: 'Design and framework',
-    designDesc: 'Supporting ecology, allowing you to quickly build website applications',
   },
 };
 
@@ -44,7 +28,6 @@ const Homepage: React.FC = () => {
   const [locale] = useLocale(locales);
   const { token } = theme.useToken();
 
-  const isDark = React.use(DarkContext);
   const [promptDrawerOpen, setPromptDrawerOpen] = useState(false);
   const siteContext = React.use(SiteContext);
 
@@ -84,24 +67,6 @@ const Homepage: React.FC = () => {
         </Suspense>
       </Group>
 
-      {/* 设计语言 */}
-      <Group
-        title={locale.designTitle}
-        description={locale.designDesc}
-        background={isDark ? '#393F4A' : '#F5F8FF'}
-        decoration={
-          <img
-            draggable={false}
-            className={classNames.image}
-            src="https://gw.alipayobjects.com/zos/bmw-prod/ba37a413-28e6-4be4-b1c5-01be1a0ebb1c.svg"
-            alt="bg"
-          />
-        }
-      >
-        <Suspense fallback={null}>
-          <DesignFramework />
-        </Suspense>
-      </Group>
     </section>
   );
 };

@@ -10,15 +10,10 @@ export interface ChangelogInfo {
 
 type ChangelogData = Record<string, ChangelogInfo[]>;
 
-const changelogLoaders: Record<'cn' | 'en', () => Promise<ChangelogData>> = {
-  cn: () => import('../preset/components-changelog-cn.json').then((mod) => mod.default),
-  en: () => import('../preset/components-changelog-en.json').then((mod) => mod.default),
-};
-
 const useChangelog = (path: string, lang: 'cn' | 'en'): ChangelogInfo[] => {
   const { data, error, isLoading } = useSWR(
     lang ? `component-changelog-${lang}` : null,
-    changelogLoaders[lang],
+    () => import('../preset/components-changelog-en.json').then((mod) => mod.default),
   );
 
   if (error || isLoading || !data) {

@@ -95,55 +95,26 @@ async function generateLLms(api: IApi) {
     ignore: ['llms*.md', 'llms*.txt'],
   });
 
-  // Separate English and Chinese docs
-  const englishDocs = markdownFiles.filter(
-    (file) => !file.includes('-cn/') && !file.endsWith('-cn.md'),
-  );
-
-  const chineseDocs = markdownFiles.filter(
-    (file) => file.includes('-cn/') || file.endsWith('-cn.md'),
-  );
-
-  const englishResult: ProcessResult = {
+  const result: ProcessResult = {
     docs: [],
     components: [],
     semantics: [],
   };
 
-  const chineseResult: ProcessResult = {
-    docs: [],
-    components: [],
-    semantics: [],
-  };
-
-  // Process English docs
-  for (const markdownFile of englishDocs) {
+  for (const markdownFile of markdownFiles) {
     try {
-      processMarkdownFile(markdownFile, siteDir, englishResult);
+      processMarkdownFile(markdownFile, siteDir, result);
     } catch (error) {
       api.logger.warn(`Error processing ${markdownFile}:`, error);
     }
   }
 
-  // Process Chinese docs
-  for (const markdownFile of chineseDocs) {
-    try {
-      processMarkdownFile(markdownFile, siteDir, chineseResult);
-    } catch (error) {
-      api.logger.warn(`Error processing ${markdownFile}:`, error);
-    }
-  }
-
-  const { docs, components, semantics } = englishResult;
-  const { docs: docsCn, components: componentsCn, semantics: semanticsCn } = chineseResult;
+  const { docs, components, semantics } = result;
 
   // Sort by title
   docs.sort((a, b) => a.title.localeCompare(b.title));
   components.sort((a, b) => a.title.localeCompare(b.title));
   semantics.sort((a, b) => a.title.localeCompare(b.title));
-  docsCn.sort((a, b) => a.title.localeCompare(b.title));
-  componentsCn.sort((a, b) => a.title.localeCompare(b.title));
-  semanticsCn.sort((a, b) => a.title.localeCompare(b.title));
 
   // 1. Generate llms-semantic.md
   const semanticContent = [
@@ -165,27 +136,6 @@ async function generateLLms(api: IApi) {
     ]),
   ].join('\n');
 
-  // 2. Generate llms-semantic-cn.md
-  const semanticContentCn = [
-    '# Ant Design 组件语义化描述',
-    '',
-    '本文档包含了 Ant Design 组件库中所有组件的语义化描述信息。',
-    '',
-    `> 总计 ${semanticsCn.length} 个组件包含语义化描述`,
-    '',
-    ...semanticsCn.flatMap((semantic) => [
-      `# ${semantic.title}`,
-      '',
-      `Source: ${semantic.url}`,
-      '',
-      semantic.content || '',
-      '',
-      '---',
-      '',
-    ]),
-  ].join('\n');
-
-  // 3. Generate llms-full.txt
   const fullContent = [
     '# Ant Design Component Documentation',
     '',
@@ -205,27 +155,6 @@ async function generateLLms(api: IApi) {
     ]),
   ].join('\n');
 
-  // 4. Generate llms-full-cn.txt
-  const fullContentCn = [
-    '# Ant Design 组件文档',
-    '',
-    '本文件包含所有组件文档的聚合内容。',
-    '',
-    `> 总计 ${componentsCn.length} 个组件`,
-    '',
-    ...componentsCn.flatMap((component) => [
-      `## ${component.title}`,
-      '',
-      `Source: ${component.url}`,
-      '',
-      component.content || '',
-      '',
-      '---',
-      '',
-    ]),
-  ].join('\n');
-
-  // 5. Generate llms.txt
   const llmsNavContent = [
     '# Ant Design - Enterprise-class React UI library',
     '',
@@ -233,57 +162,22 @@ async function generateLLms(api: IApi) {
     '',
     '## Navigation',
     '',
-    '- [Design Language (DESIGN.md)](./design.md)',
-    '- [Full Documentation (EN)](./llms-full.txt)',
-    '- [Full Documentation (CN)](./llms-full-cn.txt)',
-    '- [Semantic Documentation (EN)](./llms-semantic.md)',
-    '- [Semantic Documentation (CN)](./llms-semantic-cn.md)',
+    '- [Component Documentation](./llms-full.txt)',
+    '- [Semantic Documentation](./llms-semantic.md)',
     '',
-    '## Docs (EN)',
-    '',
-    ...docs.map(({ title, url }) => `- [${title}](${url})`),
-    '',
-    '## Docs (CN)',
-    '',
-    ...docsCn.map(({ title, url }) => `- [${title}](${url})`),
-    '',
-    '## Component Docs (EN)',
+    '## Components',
     '',
     ...components.map(({ title, url }) => `- [${title}](${url})`),
     '',
-    '## Component Docs (CN)',
-    '',
-    ...componentsCn.map(({ title, url }) => `- [${title}](${url})`),
-    '',
-    '## Semantic (EN)',
-    '',
     ...semantics.map(({ title, url }) => `- [${title}](${url})`),
-    '',
-    '## Semantic (CN)',
-    '',
-    ...semanticsCn.map(({ title, url }) => `- [${title}](${url})`),
     '',
   ].join('\n');
 
-  // Write all files
   fs.writeFileSync(path.join(siteDir, 'llms-semantic.md'), semanticContent);
-  fs.writeFileSync(path.join(siteDir, 'llms-semantic-cn.md'), semanticContentCn);
   fs.writeFileSync(path.join(siteDir, 'llms-full.txt'), fullContent);
-  fs.writeFileSync(path.join(siteDir, 'llms-full-cn.txt'), fullContentCn);
   fs.writeFileSync(path.join(siteDir, 'llms.txt'), llmsNavContent);
 
-  // Publish DESIGN.md to site root as lowercase design.md so https://ant.design/design.md works
-  // on case-sensitive filesystems regardless of how the file is named in the repo.
-  const designMdSource = path.join(api.cwd, 'DESIGN.md');
-  if (fs.existsSync(designMdSource)) {
-    fs.copyFileSync(designMdSource, path.join(siteDir, 'design.md'));
-  } else {
-    api.logger.warn('DESIGN.md not found at repo root; https://ant.design/design.md will 404.');
-  }
-
-  api.logger.event(
-    `Generated llms.txt (navigation), llms-full.txt (${components.length} components), llms-full-cn.txt (${componentsCn.length} components), llms-semantic.md (${semantics.length} semantics), llms-semantic-cn.md (${semanticsCn.length} semantics)`,
-  );
+  api.logger.event(`Generated llms.txt, llms-full.txt (${components.length} components)`);
 }
 
 export default async function llmsPlugin(api: IApi) {

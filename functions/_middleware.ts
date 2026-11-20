@@ -6,11 +6,9 @@ Ant Design is a React UI library for building enterprise-class web applications.
 
 - API catalog: [/.well-known/api-catalog](/.well-known/api-catalog)
 - OpenAPI description: [/.well-known/openapi.json](/.well-known/openapi.json)
-- Documentation: [/docs/react/introduce](/docs/react/introduce)
-- LLM documentation: [/llms-full.txt](/llms-full.txt)
+- Component documentation: [/components/overview](/components/overview)
 - Agent skills index: [/.well-known/agent-skills/index.json](/.well-known/agent-skills/index.json)
 - MCP server card: [/.well-known/mcp/server-card.json](/.well-known/mcp/server-card.json)
-- Auth metadata: [/auth.md](/auth.md)
 `;
 
 const markdownTokenCount = String(homepageMarkdown.trim().split(/\s+/).length);

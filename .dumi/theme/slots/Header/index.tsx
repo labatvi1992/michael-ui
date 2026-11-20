@@ -16,7 +16,6 @@ import { getBannerData } from '../../../pages/index/components/util';
 import ThemeSwitch from '../../common/ThemeSwitch';
 import DirectionIcon from '../../icons/DirectionIcon';
 import { ANT_DESIGN_NOT_SHOW_BANNER } from '../../layouts/GlobalLayout';
-import * as utils from '../../utils';
 import SiteContext from '../SiteContext';
 import type { SharedProps } from './interface';
 import Logo from './Logo';
@@ -26,8 +25,6 @@ import SwitchBtn from './SwitchBtn';
 
 const RESPONSIVE_XS = 1120;
 const RESPONSIVE_SM = 1200;
-
-export const ANT_LOCAL_TYPE_KEY = 'ANT_LOCAL_TYPE_KEY';
 
 const useStyle = createStyles(({ cssVar, token, css }) => {
   const searchIconColor = '#ced4d9';
@@ -221,15 +218,11 @@ const Header: React.FC = () => {
   const { direction, isMobile, bannerVisible, updateSiteConfig } = React.use(SiteContext);
   const pingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
-  const { pathname, search } = location;
+  const { pathname } = location;
 
   const { styles } = useStyle();
 
   const [, setTopBannerDay] = useLocalStorage<string | undefined>(ANT_DESIGN_NOT_SHOW_BANNER, {
-    initialValue: undefined,
-  });
-
-  const [, setLocalType] = useLocalStorage<string | undefined>(ANT_LOCAL_TYPE_KEY, {
     initialValue: undefined,
   });
 
@@ -289,20 +282,6 @@ const Header: React.FC = () => {
     }
   }, []);
 
-  const onLangChange = useCallback(() => {
-    const currentProtocol = `${window.location.protocol}//`;
-    const currentHref = window.location.href.slice(currentProtocol.length);
-
-    setLocalType(utils.isZhCN(pathname) ? 'en-US' : 'zh-CN');
-
-    window.location.href =
-      currentProtocol +
-      currentHref.replace(
-        window.location.pathname,
-        utils.getLocalizedPathname(pathname, !utils.isZhCN(pathname), search).pathname,
-      );
-  }, [pathname, search, setLocalType]);
-
   const nextDirectionText = useMemo<string>(
     () => (direction !== 'rtl' ? 'RTL' : 'LTR'),
     [direction],
@@ -345,7 +324,6 @@ const Header: React.FC = () => {
       responsive={responsive}
       isMobile={isMobile}
       directionText={nextDirectionText}
-      onLangChange={onLangChange}
       onDirectionChange={onDirectionChange}
     />
   );
@@ -365,15 +343,6 @@ const Header: React.FC = () => {
       popupMatchSelectWidth={false}
       getPopupContainer={(trigger) => trigger.parentNode}
       options={versionOptions}
-    />,
-    <SwitchBtn
-      key="lang"
-      onClick={onLangChange}
-      value={utils.isZhCN(pathname) ? 1 : 2}
-      label1="中"
-      label2="En"
-      tooltip1="中文 / English"
-      tooltip2="English / 中文"
     />,
     <SwitchBtn
       key="direction"

@@ -8,7 +8,7 @@ const output = '.dumi/preset';
 // Collect components
 const componentNames = globSync(
   path
-    .join(process.cwd(), 'components/!(version|icon|col|row)/index?(.legacy).zh-CN.md')
+    .join(process.cwd(), 'components/!(version|icon|col|row)/index?(.legacy).en-US.md')
     .split(path.sep)
     .join('/'),
 )
@@ -234,8 +234,15 @@ const miscKeys = [
     fs.writeFileSync(path.join(output, targetFile), JSON.stringify(componentChangelog), 'utf-8');
   }
 
-  syncChangelog('CHANGELOG.zh-CN.md', 'components-changelog-cn.json');
-  syncChangelog('CHANGELOG.en-US.md', 'components-changelog-en.json');
+  if (fs.existsSync('CHANGELOG.en-US.md')) {
+    syncChangelog('CHANGELOG.en-US.md', 'components-changelog-en.json');
+  } else {
+    fs.writeFileSync(
+      path.join(output, 'components-changelog-en.json'),
+      JSON.stringify(Object.fromEntries(Object.keys(componentNameMap).map((name) => [name, []]))),
+      'utf-8',
+    );
+  }
   fs.writeFileSync(
     path.join(output, 'misc-changelog.json'),
     JSON.stringify(miscChangelog),

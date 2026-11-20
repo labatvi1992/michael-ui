@@ -3,30 +3,11 @@ import { MenuOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { ConfigProvider, Menu } from 'antd';
 import { createStyles } from 'antd-style';
-import { FormattedMessage, useFullSidebarData, useLocation } from 'dumi';
+import { useLocation } from 'dumi';
 
-import useLocale from '../../../hooks/useLocale';
 import Link from '../../common/Link';
 import * as utils from '../../utils';
 import type { SharedProps } from './interface';
-
-// ============================= Theme =============================
-const locales = {
-  cn: {
-    design: '设计',
-    development: '研发',
-    components: '组件',
-    resources: '资源',
-    blog: '博客',
-  },
-  en: {
-    design: 'Design',
-    development: 'Development',
-    components: 'Components',
-    resources: 'Resources',
-    blog: 'Blog',
-  },
-};
 
 // ============================= Style =============================
 const useStyle = createStyles(({ cssVar, token, css }) => {
@@ -70,17 +51,12 @@ export interface NavigationProps extends SharedProps {
   isMobile: boolean;
   responsive: null | 'narrow' | 'crowded';
   directionText: string;
-  onLangChange: () => void;
   onDirectionChange: () => void;
 }
 
 const HeaderNavigation: React.FC<NavigationProps> = (props) => {
-  const { isZhCN, isMobile, responsive, directionText, onLangChange, onDirectionChange } = props;
+  const { isZhCN, isMobile, responsive, directionText, onDirectionChange } = props;
   const { pathname, search } = useLocation();
-  const [locale] = useLocale(locales);
-
-  const sidebarData = useFullSidebarData();
-  const blogList = sidebarData['/docs/blog']?.[0]?.children || [];
 
   const { styles } = useStyle();
 
@@ -88,11 +64,6 @@ const HeaderNavigation: React.FC<NavigationProps> = (props) => {
 
   const module = pathname.split('/').filter(Boolean).slice(0, -1).join('/');
   let activeMenuItem = module || 'home';
-  if (pathname.startsWith('/changelog')) {
-    activeMenuItem = 'docs/react';
-  } else if (pathname.startsWith('/docs/resources')) {
-    activeMenuItem = 'docs/resources';
-  }
 
   let additional: MenuProps['items'] = [];
 
@@ -108,11 +79,6 @@ const HeaderNavigation: React.FC<NavigationProps> = (props) => {
         </a>
       ),
       key: 'github',
-    },
-    {
-      label: <FormattedMessage id="app.header.lang" />,
-      onClick: onLangChange,
-      key: 'switch-lang',
     },
     {
       label: directionText,
@@ -136,52 +102,11 @@ const HeaderNavigation: React.FC<NavigationProps> = (props) => {
   const items: MenuProps['items'] = [
     {
       label: (
-        <Link to={utils.getLocalizedPathname('/docs/spec/introduce', isZhCN, search)}>
-          {locale.design}
-        </Link>
-      ),
-      key: 'docs/spec',
-    },
-    {
-      label: (
-        <Link to={utils.getLocalizedPathname('/docs/react/introduce', isZhCN, search)}>
-          {locale.development}
-        </Link>
-      ),
-      key: 'docs/react',
-    },
-    {
-      label: (
         <Link to={utils.getLocalizedPathname('/components/overview/', isZhCN, search)}>
-          {locale.components}
+          Components
         </Link>
       ),
       key: 'components',
-    },
-    blogList.length
-      ? {
-          label: (
-            <Link
-              to={utils.getLocalizedPathname(
-                blogList.sort((a, b) => (a.frontmatter?.date > b.frontmatter?.date ? -1 : 1))[0]
-                  .link,
-                isZhCN,
-                search,
-              )}
-            >
-              {locale.blog}
-            </Link>
-          ),
-          key: 'docs/blog',
-        }
-      : null,
-    {
-      label: (
-        <Link to={utils.getLocalizedPathname('/docs/resources', isZhCN, search)}>
-          {locale.resources}
-        </Link>
-      ),
-      key: 'docs/resources',
     },
     isZhCN
       ? {

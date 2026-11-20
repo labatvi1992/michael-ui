@@ -13,23 +13,14 @@ export interface NotFoundProps {
   };
 }
 
-const DIRECT_MAP: Record<string, string> = {
-  'docs/spec/download': 'docs/resources',
-  'docs/spec/work-with-us': 'docs/resources',
-};
-
 const NotFoundPage: React.FC<NotFoundProps> = ({ router }) => {
   const { pathname } = useLocation();
 
   const isZhCN = utils.isZhCN(pathname);
 
   useEffect(() => {
-    const directLinks = Object.keys(DIRECT_MAP);
-    for (let i = 0; i < directLinks.length; i += 1) {
-      const matchPath = directLinks[i];
-      if (pathname.includes(matchPath)) {
-        router.replace(utils.getLocalizedPathname(`/${DIRECT_MAP[matchPath]}`, isZhCN).pathname);
-      }
+    if (pathname.startsWith('/docs/') || pathname.startsWith('/changelog')) {
+      router.replace('/components/overview');
     }
 
     // Report if necessary
