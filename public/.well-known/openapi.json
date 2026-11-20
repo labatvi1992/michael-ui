@@ -83,16 +83,6 @@
           }
         }
       }
-    },
-    "/auth.md": {
-      "get": {
-        "summary": "Auth.md agent registration notes",
-        "responses": {
-          "200": {
-            "description": "Markdown describing the current public authentication and registration posture."
-          }
-        }
-      }
     }
   }
 }

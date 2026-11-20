@@ -11,8 +11,8 @@ import uniq from 'lodash/uniq';
 import portfinder from 'portfinder';
 
 const components = uniq(
-  globSync('components/!(overview)/*.md', { cwd: join(process.cwd()), dot: false }).map((path) =>
-    path.replace(/(\/index)?((\.zh-cn)|(\.en-us))?\.md$/i, ''),
+  globSync('components/!(overview)/index.en-US.md', { cwd: join(process.cwd()), dot: false }).map(
+    (path) => path.replace(/\/index\.en-us\.md$/i, ''),
   ),
 ).filter((component) => !component.includes('_util'));
 
@@ -144,42 +144,14 @@ describe('site test', () => {
     expect(status).toBe(200);
   });
 
-  it('Basic Pages zh', async () => {
-    const { status, $ } = await render('/index-cn');
-    expect($('title').first().text()).toEqual(`Ant Design - 一套企业级 UI 设计语言和 React 组件库`);
-    expect(status).toBe(200);
-  });
-
   it('Overview en', async () => {
     const { status, $ } = await render('/components/overview');
     expect(status).toBe(200);
     expect($('h1').text()).toMatch(`Overview`);
   });
 
-  it('Overview zh', async () => {
-    const { status, $ } = await render('/components/overview-cn');
-    expect(status).toBe(200);
-    expect($('h1').text()).toMatch(`组件总览`);
-  });
-
-  it('Resource en', async () => {
-    const { status, $ } = await render('/docs/resources');
-    expect(status).toBe(200);
-    expect($('h1').text()).toMatch(`Resources`);
-  });
-
-  it('Resource zh', async () => {
-    const { status, $ } = await render('/docs/resources-cn');
-    expect(status).toBe(200);
-    expect($('h1').text()).toMatch(`资源`);
-  });
-
   for (const component of components) {
     if (component.split('/').length < 3) {
-      it(`Component ${component} zh Page`, async () => {
-        await expectComponent(`${component}-cn`);
-        expect(component).toBeTruthy();
-      });
       it(`Component ${component} en Page`, async () => {
         await expectComponent(component);
         expect(component).toBeTruthy();

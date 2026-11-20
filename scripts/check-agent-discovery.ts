@@ -23,7 +23,10 @@ const validateProtectedResourceFunction = async () => {
   assert.deepEqual(protectedResource.bearer_methods_supported, ['header']);
   assert.equal(protectedResource.resource, `${previewOrigin}/`);
   assert.equal(protectedResource.resource_name, 'Ant Design Documentation');
-  assert.equal(protectedResource.resource_documentation, `${previewOrigin}/docs/react/introduce`);
+  assert.equal(
+    protectedResource.resource_documentation,
+    `${previewOrigin}/components/overview`,
+  );
 };
 
 const validateAuthorizationServerFunction = async () => {
@@ -36,20 +39,23 @@ const validateAuthorizationServerFunction = async () => {
 
   const metadata = await authServerResponse.json();
   assert.equal(metadata.issuer, previewOrigin);
-  assert.equal(metadata.authorization_endpoint, `${previewOrigin}/auth.md`);
-  assert.equal(metadata.token_endpoint, `${previewOrigin}/auth.md`);
+  assert.equal(metadata.authorization_endpoint, `${previewOrigin}/components/overview`);
+  assert.equal(metadata.token_endpoint, `${previewOrigin}/components/overview`);
   assert.equal(metadata.jwks_uri, `${previewOrigin}/.well-known/jwks.json`);
   assert.deepEqual(metadata.grant_types_supported, [
     'urn:ietf:params:oauth:grant-type:token-exchange',
   ]);
   assert.deepEqual(metadata.response_types_supported, ['none']);
   assert.deepEqual(metadata.scopes_supported, ['public:read']);
-  assert.equal(metadata.agent_auth.skill, `${previewOrigin}/auth.md`);
-  assert.equal(metadata.agent_auth.register_uri, `${previewOrigin}/auth.md`);
-  assert.equal(metadata.agent_auth.claim_uri, `${previewOrigin}/auth.md`);
+  assert.equal(metadata.agent_auth.skill, `${previewOrigin}/components/overview`);
+  assert.equal(metadata.agent_auth.register_uri, `${previewOrigin}/components/overview`);
+  assert.equal(metadata.agent_auth.claim_uri, `${previewOrigin}/components/overview`);
   assert.deepEqual(metadata.agent_auth.identity_types_supported, ['anonymous']);
   assert.deepEqual(metadata.agent_auth.anonymous.credential_types_supported, ['none']);
-  assert.equal(metadata.agent_auth.anonymous.claim_uri, `${previewOrigin}/auth.md`);
+  assert.equal(
+    metadata.agent_auth.anonymous.claim_uri,
+    `${previewOrigin}/components/overview`,
+  );
 };
 
 const validateMarkdownMiddleware = async () => {
@@ -93,7 +99,6 @@ const originAgnosticFiles = [
   ['.well-known', 'jwks.json'],
   ['.well-known', 'mcp', 'server-card.json'],
   ['.well-known', 'openapi.json'],
-  ['auth.md'],
 ];
 
 for (const filePath of originAgnosticFiles) {
@@ -104,8 +109,7 @@ assert.match(
   headers,
   /Link: <\/\.well-known\/api-catalog>; rel="api-catalog"; type="application\/linkset\+json"/,
 );
-assert.match(headers, /Link: <\/llms\.txt>; rel="service-doc"; type="text\/plain"/);
-assert.match(headers, /Link: <\/llms-full\.txt>; rel="service-desc"; type="text\/plain"/);
+assert.match(headers, /Link: <\/components\/overview>; rel="service-doc"; type="text\/html"/);
 assert.match(
   headers,
   /Link: <\/\.well-known\/agent-card\.json>; rel="describedby"; type="application\/json"/,
@@ -126,17 +130,10 @@ assert.ok(
 );
 assert.ok(
   rootEntry['service-doc']?.some(
-    (link: any) => link.href === '/docs/react/introduce' && link.type === 'text/html',
+    (link: any) => link.href === '/components/overview' && link.type === 'text/html',
   ),
 );
 assert.ok(rootEntry.status?.some((link: any) => link.href === '/' && link.type === 'text/html'));
-
-const authMd = fs.readFileSync(publicPath('auth.md'), 'utf8');
-assert.match(authMd, /^# ant\.design auth\.md/m);
-assert.match(authMd, /No OAuth-protected API is currently exposed by ant\.design\./);
-assert.match(authMd, /Identity type: anonymous/);
-assert.match(authMd, /Scope: `public:read`/);
-assert.match(authMd, /Credential use: no bearer token is required/);
 
 const serverCard = readPublicJson('.well-known', 'mcp', 'server-card.json');
 assert.equal(serverCard.serverInfo.name, 'Ant Design Documentation');

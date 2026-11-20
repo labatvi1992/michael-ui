@@ -5,13 +5,10 @@ import {
   BgColorsOutlined,
   BugOutlined,
   GithubOutlined,
-  HistoryOutlined,
   IssuesCloseOutlined,
   MediumOutlined,
   MessageOutlined,
   QuestionCircleOutlined,
-  RobotOutlined,
-  UsergroupAddOutlined,
   XOutlined,
   ZhihuOutlined,
 } from '@ant-design/icons';
@@ -240,18 +237,6 @@ const Footer: React.FC = () => {
       ],
     };
 
-    if (isZhCN) {
-      col2.items.push({
-        icon: <UsergroupAddOutlined />,
-        title: <FormattedMessage id="app.footer.work_with_us" />,
-        url: getLink('/docs/resources', {
-          cn: '加入我们',
-          en: 'JoinUs',
-        }),
-        LinkComponent: Link,
-      } as unknown as (typeof col2)['items'][number]);
-    }
-
     const col3 = {
       title: <FormattedMessage id="app.footer.help" />,
       items: [
@@ -259,26 +244,6 @@ const Footer: React.FC = () => {
           icon: <GithubOutlined />,
           title: 'GitHub',
           url: 'https://github.com/ant-design/ant-design',
-          openExternal: true,
-        },
-        {
-          icon: <HistoryOutlined />,
-          title: <FormattedMessage id="app.footer.change-log" />,
-          url: getLink('/changelog'),
-          LinkComponent: Link,
-        },
-        {
-          icon: <QuestionCircleOutlined />,
-          title: <FormattedMessage id="app.footer.faq" />,
-          url: getLink('/docs/react/faq'),
-          LinkComponent: Link,
-        },
-        {
-          icon: <RobotOutlined />,
-          title: 'For Agents',
-          url: isZhCN
-            ? 'https://ant.design/docs/react/for-agents-cn.md'
-            : 'https://ant.design/docs/react/for-agents.md',
           openExternal: true,
         },
         {

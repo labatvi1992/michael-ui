@@ -1,9 +1,7 @@
 /
   Link: </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"
   Link: </.well-known/openapi.json>; rel="service-desc"; type="application/openapi+json"
-  Link: </docs/react/introduce>; rel="service-doc"; type="text/html"
-  Link: </llms.txt>; rel="service-doc"; type="text/plain"
-  Link: </llms-full.txt>; rel="service-desc"; type="text/plain"
+  Link: </components/overview>; rel="service-doc"; type="text/html"
   Link: </.well-known/agent-card.json>; rel="describedby"; type="application/json"
   Link: </.well-known/agent-skills/index.json>; rel="describedby"; type="application/json"
   Link: </.well-known/mcp/server-card.json>; rel="describedby"; type="application/json"
@@ -29,14 +27,8 @@
 /.well-known/agent-skills/index.json
   Content-Type: application/json
 
-/.well-known/agent-skills/*/SKILL.md
-  Content-Type: text/markdown; charset=utf-8
-
 /.well-known/mcp/server-card.json
   Content-Type: application/json
 
 /.well-known/agent-card.json
   Content-Type: application/json
-
-/auth.md
-  Content-Type: text/markdown; charset=utf-8

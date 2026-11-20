@@ -11,11 +11,9 @@ import { Helmet, useOutlet, useSearchParams, useSiteData } from 'dumi';
 import useLocale from '../../../hooks/useLocale';
 import useLocation from '../../../hooks/useLocation';
 import GlobalStyles from '../../common/GlobalStyles';
-import VersionUpgrade from '../../common/VersionUpgrade';
 import Header from '../../slots/Header';
 import SiteContext from '../../slots/SiteContext';
 import IndexLayout from '../IndexLayout';
-import ResourceLayout from '../ResourceLayout';
 import SidebarLayout from '../SidebarLayout';
 
 const locales = {
@@ -80,9 +78,6 @@ const DocLayout: React.FC = () => {
         </IndexLayout>
       );
     }
-    if (pathname.startsWith('/docs/resource')) {
-      return <ResourceLayout>{outlet}</ResourceLayout>;
-    }
     if (pathname.startsWith('/theme-editor') || pathname.startsWith('/theme-market')) {
       return outlet;
     }
@@ -117,7 +112,6 @@ const DocLayout: React.FC = () => {
       >
         <GlobalStyles />
         {!hideLayout && <Header />}
-        <VersionUpgrade />
         {content}
       </ConfigProvider>
     </>

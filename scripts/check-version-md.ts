@@ -36,7 +36,17 @@ if (!/^\d+\.\d+\.\d+$/.test(version)) {
   process.exit(0);
 }
 
-const changeLogContent = fs.readFileSync(join(__dirname, '..', 'CHANGELOG.en-US.md')).toString();
+const changelogPath = join(__dirname, '..', 'CHANGELOG.en-US.md');
+if (!fs.existsSync(changelogPath)) {
+  console.log('\n');
+  console.log(
+    chalk.blue('[check-version-md]: Changelog is not maintained in this repository. Skipped.'),
+  );
+  console.log('\n');
+  process.exit(0);
+}
+
+const changeLogContent = fs.readFileSync(changelogPath).toString();
 
 const changeLog = getChangelogByVersion(changeLogContent, version);
 if (!changeLog) {

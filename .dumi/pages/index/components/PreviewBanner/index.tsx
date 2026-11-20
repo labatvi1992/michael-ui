@@ -18,13 +18,11 @@ const locales = {
   cn: {
     slogan: 'AI 友好的「设计系统」，让美与智能并进，让工作充满「灵感」与「快乐」。',
     start: '开始使用',
-    designLanguage: '设计语言',
   },
   en: {
     slogan:
       'AI friendly design system that combines beauty and intelligence, making work full of inspiration and joy.',
     start: 'Getting Started',
-    designLanguage: 'Design Language',
   },
 };
 
@@ -118,12 +116,6 @@ const PreviewBanner: React.FC<Readonly<React.PropsWithChildren>> = (props) => {
             to={utils.getLocalizedPathname('/components/overview/', isZhCN, search)}
           >
             {locale.start}
-          </LinkButton>
-          <LinkButton
-            size="large"
-            to={utils.getLocalizedPathname('/docs/spec/introduce/', isZhCN, search)}
-          >
-            {locale.designLanguage}
           </LinkButton>
         </Flex>
         <div className={styles.child}>{children}</div>

@@ -32,10 +32,7 @@ const botExcludes = [
   'depfu[bot]',
 ];
 
-const locales = [
-  { locale: 'zhCN', suffix: 'zh-CN' },
-  { locale: 'enUS', suffix: 'en-US' },
-];
+const locales = [{ locale: 'enUS', suffix: 'en-US' }];
 
 const token = process.env.GITHUB_ACCESS_TOKEN || process.env.GITHUB_TOKEN;
 
@@ -98,43 +95,7 @@ const modules: ModuleConfig[] = [
       return result;
     },
   },
-  {
-    name: 'blog',
-    dir: path.join(cwd, 'docs', 'blog'),
-    async getDocFiles(localeSuffix) {
-      return getDocsFromFlatDir(this.dir, localeSuffix);
-    },
-  },
-  {
-    name: 'react',
-    dir: path.join(cwd, 'docs', 'react'),
-    async getDocFiles(localeSuffix) {
-      return getDocsFromFlatDir(this.dir, localeSuffix);
-    },
-  },
-  {
-    name: 'spec',
-    dir: path.join(cwd, 'docs', 'spec'),
-    async getDocFiles(localeSuffix) {
-      return getDocsFromFlatDir(this.dir, localeSuffix);
-    },
-  },
 ];
-
-async function getDocsFromFlatDir(dir: string, localeSuffix: string) {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
-  const result: { key: string; filePath: string }[] = [];
-
-  for (const entry of entries) {
-    if (!entry.isFile() || !entry.name.endsWith(`.${localeSuffix}.md`)) {
-      continue;
-    }
-    const key = entry.name.replace(`.${localeSuffix}.md`, '');
-    result.push({ key, filePath: path.join(dir, entry.name) });
-  }
-
-  return result;
-}
 
 async function getFileCommits(filePath: string) {
   const commits = await octokit.paginate(octokit.rest.repos.listCommits, {
