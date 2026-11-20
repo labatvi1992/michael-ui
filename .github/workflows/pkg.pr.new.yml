@@ -27,18 +27,3 @@ jobs:
         run: ut build
         env:
           NODE_OPTIONS: --max_old_space_size=4096
-
-      # ========== Prepare examples ==========
-      - name: Clear examples
-        run: rm -rf examples
-
-      - name: Clone examples
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          repository: ant-design/ant-design-examples
-          path: examples
-
-      - name: Modify examples
-        run: utx tsx scripts/prepare-examples.ts
-
-      - run: utx pkg-pr-new publish --template './examples/examples/*'
