@@ -1,0 +1,76 @@
+---
+title: Tooltip
+description: Simple text popup box.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="tooltip" />
+
+## Usage
+
+```tsx
+import { Tooltip } from 'michael-ui';
+
+export default () => {
+  return <Tooltip />;
+};
+```
+
+## Examples
+
+### Tooltip Placements
+
+<ComponentDemo name="tooltip-placement" />
+
+
+## When To Use
+
+- The tip is shown on mouse enter, and is hidden on mouse leave. The Tooltip doesn't support complex text or operations.
+- To provide an explanation of a `button/text/operation`. It's often used instead of the HTML `title` attribute.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| title | The text shown in the tooltip | ReactNode \| () =&gt; ReactNode | - | - | × |
+| color | The background color. After using this attribute, the internal text color will adapt automatically | string | - | 5.27.0 | × |
+| classNames | Semantic DOM class | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | 5.23.0 | 5.23.0 |
+| styles | Semantic DOM style | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | 5.23.0 | 5.23.0 |
+
+### Common API
+
+&lt;embed src="./shared/sharedProps.en-US.md"&gt;&lt;/embed&gt;
+
+### ConfigProvider - tooltip.unique &#123;#config-provider-tooltip-unique&#125;
+
+You can configure global unique display for Tooltip through ConfigProvider. When `unique` is set to `true`, only one Tooltip under the ConfigProvider will be displayed at the same time, providing better user experience and smooth transition effects.
+
+Note: After configuration, properties like `getContainer`, `arrow` etc. will be ignored.
+
+```tsx
+import { Button, ConfigProvider, Space, Tooltip } from 'antd';
+
+export default () => (
+  <ConfigProvider
+    tooltip={{
+      unique: true,
+    }}
+  >
+    <Space>
+      <Tooltip title="First tooltip">
+        <Button>Button 1</Button>
+      </Tooltip>
+      <Tooltip title="Second tooltip">
+        <Button>Button 2</Button>
+      </Tooltip>
+    </Space>
+  </ConfigProvider>
+);
+```
+

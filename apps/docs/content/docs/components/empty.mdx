@@ -1,0 +1,56 @@
+---
+title: Empty
+description: Empty state placeholder.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="empty" />
+
+## Usage
+
+```tsx
+import { Empty } from 'michael-ui';
+
+export default () => {
+  return <Empty />;
+};
+```
+
+
+## When To Use
+
+- When there is no data provided, display for friendly tips.
+- User tutorial to create something in fresh new situation.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+```jsx
+<Empty>
+  <Button>Create</Button>
+</Empty>
+```
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| classNames | Customize class for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - |  | 5.23.0 |
+| description | Customize description | ReactNode | - |  | × |
+| image | Customize image. Will treat as image url when string provided | ReactNode | `Empty.PRESENTED_IMAGE_DEFAULT` |  | 5.27.0 |
+| ~~imageStyle~~ | The style of image, please use `styles.image` instead | CSSProperties | - |  | × |
+| styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - |  | 5.23.0 |
+
+## Built-in images
+
+- Empty.PRESENTED_IMAGE_SIMPLE
+
+  &lt;div class="site-empty-buildIn-img site-empty-buildIn-simple"&gt;&lt;div&gt;
+
+- Empty.PRESENTED_IMAGE_DEFAULT
+
+  &lt;div class="site-empty-buildIn-img site-empty-buildIn-default"&gt;&lt;/div&gt;
+

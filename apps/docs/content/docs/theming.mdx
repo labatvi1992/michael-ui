@@ -1,0 +1,63 @@
+---
+title: Dynamic Theming
+description: Customize themes, algorithms, and design tokens dynamically with ConfigProvider.
+---
+
+# Dynamic Theming
+
+`michael-ui` comes with a powerful Design Token system and instant client-side theme switching via `ConfigProvider`.
+
+## Theme Algorithms
+
+Ant Design provides built-in algorithms for dark mode and compact density:
+
+```tsx
+import { ConfigProvider, theme } from 'michael-ui';
+
+// Dark Mode
+<ConfigProvider
+  theme={{
+    algorithm: theme.darkAlgorithm,
+  }}
+>
+  <App />
+</ConfigProvider>
+
+// Compact Mode
+<ConfigProvider
+  theme={{
+    algorithm: theme.compactAlgorithm,
+  }}
+>
+  <App />
+</ConfigProvider>
+
+// Dark + Compact combined
+<ConfigProvider
+  theme={{
+    algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+  }}
+>
+  <App />
+</ConfigProvider>
+```
+
+## Custom Design Tokens
+
+Easily modify brand colors, border radius, fonts, and dimensions:
+
+```tsx
+<ConfigProvider
+  theme={{
+    token: {
+      colorPrimary: '#722ed1', // Custom purple brand color
+      borderRadius: 8,         // 8px rounded corners
+      fontSize: 14,
+    },
+  }}
+>
+  <App />
+</ConfigProvider>
+```
+
+> 💡 **Try it Live**: Use the **Theme Customizer** button in the top navigation bar to test theme configurations live across all demo components on this site!

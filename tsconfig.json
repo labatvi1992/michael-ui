@@ -1,31 +1,27 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "jsx": "react",
-    "jsxFactory": "React.createElement",
-    "jsxFragmentFactory": "React.Fragment",
-    "lib": ["dom", "es2017"],
-    "experimentalDecorators": true,
-    "module": "esnext",
+    "target": "ES2022",
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "ESNext",
     "moduleResolution": "Bundler",
-    "rewriteRelativeImportExtensions": true,
     "paths": {
-      "@@/*": ["./.dumi/tmp/*"],
-      "antd": ["./components/index.ts"],
-      "antd/es/*": ["./components/*"],
-      "antd/lib/*": ["./components/*"],
-      "antd/locale/*": ["./components/locale/*"]
+      "michael-ui": ["./packages/michael-ui/components/index.ts"],
+      "michael-ui/locale/*": ["./packages/michael-ui/components/locale/*"],
+      "antd": ["./packages/michael-ui/components/index.ts"],
+      "antd/locale/*": ["./packages/michael-ui/components/locale/*"]
     },
-    "resolvePackageJsonExports": true,
     "strict": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "stripInternal": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": [".dumirc.ts", ".jest*.ts", "**/*"],
-  "exclude": ["node_modules", "lib", "es"]
+  "include": [
+    "packages/**/*",
+    "apps/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "packages/*/dist",
+    "apps/*/.next"
+  ]
 }

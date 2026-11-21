@@ -35,7 +35,6 @@ config/base.yaml
 /coverage
 yarn.lock
 package-lock.json
-pnpm-lock.yaml
 bun.lock*
 .pnpm-debug.log
 .pnpm-store
@@ -55,6 +54,10 @@ components/version/version.ts
 components/version/version.tsx
 components/version/token.json
 components/version/token-meta.json
+packages/michael-ui/components/version/version.ts
+packages/michael-ui/components/version/version.tsx
+packages/michael-ui/components/version/token.json
+packages/michael-ui/components/version/token-meta.json
 .dumi/tmp
 .dumi/tmp-test
 .dumi/tmp-production
@@ -86,4 +89,13 @@ docs/superpowers/
 
 # generated css
 components/style/antd.css
+packages/michael-ui/components/style/antd.css
 .turbopack
+
+.turbo/
+**/.turbo/**
+.next/
+**/.next/**
+.source/
+**/.source/**
+*.tgz

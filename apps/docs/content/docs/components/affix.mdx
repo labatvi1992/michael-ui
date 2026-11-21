@@ -1,0 +1,50 @@
+---
+title: Affix
+description: Stick an element to the viewport.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="affix" />
+
+## Usage
+
+```tsx
+import { Affix } from 'michael-ui';
+
+export default () => {
+  return <Affix />;
+};
+```
+
+
+## When To Use
+
+On longer web pages, it's helpful to stick component into the viewport. This is common for menus and actions.
+
+Please note that Affix should not cover other content on the page, especially when the size of the viewport is small.
+
+&gt; Notes for developers
+&gt;
+&gt; After version `5.10.0`, we rewrite Affix use FC, some methods of obtaining `ref` and calling internal instance methods will be invalid.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| offsetBottom | Offset from the bottom of the viewport (in pixels) | number | - |  | × |
+| offsetTop | Offset from the top of the viewport (in pixels) | number | 0 |  | × |
+| target | Specifies the scrollable area DOM node | () =&gt; Window \| HTMLElement \| null | () =&gt; window |  | × |
+| onChange | Callback for when Affix state is changed | (affixed?: boolean) =&gt; void | - |  | × |
+
+**Note:** Children of `Affix` must not have the property `position: absolute`, but you can set `position: absolute` on `Affix` itself:
+
+```jsx
+<Affix style={{ position: 'absolute', top: y, left: x }}>...</Affix>
+```
+

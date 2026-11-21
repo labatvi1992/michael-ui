@@ -1,0 +1,85 @@
+---
+title: Statistic
+description: Display statistic number.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="statistic" />
+
+## Usage
+
+```tsx
+import { Statistic } from 'michael-ui';
+
+export default () => {
+  return <Statistic />;
+};
+```
+
+## Examples
+
+### Countdown Timer
+
+<ComponentDemo name="statistic-countdown" />
+
+
+## When To Use
+
+- When want to highlight some data.
+- When want to display statistic data with description.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+#### Statistic
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| classNames | Customize class for each semantic structure inside the Statistic component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - |  | 6.0.0 |
+| decimalSeparator | The decimal separator | string | `.` |  | × |
+| formatter | Customize value display logic | (value) =&gt; ReactNode | - |  | × |
+| groupSeparator | Group separator | string | `,` |  | × |
+| loading | Loading status of Statistic | boolean | false | 4.8.0 | × |
+| precision | The precision of input value | number | - |  | × |
+| prefix | The prefix node of value | ReactNode | - |  | × |
+| styles | Customize inline style for each semantic structure inside the Statistic component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - |  | 6.0.0 |
+| suffix | The suffix node of value | ReactNode | - |  | × |
+| title | Display title | ReactNode | - |  | × |
+| value | Display value | string \| number | - |  | × |
+| ~~valueStyle~~ | Set value section style, please use `styles.content` instead | CSSProperties | - |  | × |
+
+#### Statistic.Countdown &lt;Badge type="error"&gt;Deprecated&lt;/Badge&gt;
+
+&lt;Antd component="Alert" title="When using version &gt;= 5.25.0, Please use Statistic.Timer instead." type="warning" banner="true"&gt;&lt;/Antd&gt;
+
+
+| Property | Description | Type | Default | Version |
+| --- | --- | --- | --- | --- |
+| format | Format as [dayjs](https://day.js.org/) | string | `HH:mm:ss` |  |
+| prefix | The prefix node of value | ReactNode | - |  |
+| suffix | The suffix node of value | ReactNode | - |  |
+| title | Display title | ReactNode | - |  |
+| value | Set target countdown time | number | - |  |
+| valueStyle | Set value section style | CSSProperties | - |  |
+| onFinish | Trigger when time's up | () =&gt; void | - |  |
+| onChange | Trigger when time's changing | (value: number) =&gt; void | - | - |
+
+#### Statistic.Timer &lt;Badge&gt;5.25.0+&lt;/Badge&gt;
+
+| Property | Description | Type | Default | Version |
+| --- | --- | --- | --- | --- |
+| type | Timer direction, count down or count up | `countdown` \| `countup` | - |  |
+| format | Format as [dayjs](https://day.js.org/) | string | `HH:mm:ss` |  |
+| prefix | The prefix node of value | ReactNode | - |  |
+| suffix | The suffix node of value | ReactNode | - |  |
+| title | Display title | ReactNode | - |  |
+| value | Target time for `countdown`, or start time for `countup` (timestamp in ms) | number | - |  |
+| valueStyle | Set value section style | CSSProperties | - |  |
+| onFinish | Trigger when time's up, only called when type is `countdown` | () =&gt; void | - |  |
+| onChange | Trigger when time's changing | (value: number) =&gt; void | - |  |
+

@@ -1,0 +1,54 @@
+---
+title: Popover
+description: The floating card pops up when clicking/mouse hovering over an element.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="popover" />
+
+## Usage
+
+```tsx
+import { Popover } from 'michael-ui';
+
+export default () => {
+  return <Popover />;
+};
+```
+
+## Examples
+
+### Popover Triggers
+
+<ComponentDemo name="popover-trigger" />
+
+
+## When To Use
+
+A simple popup menu to provide extra information or operations.
+
+Comparing with `Tooltip`, besides information `Popover` card can also provide action elements like links and buttons.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+| Property | Description | Type | Default value | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| classNames | Customize class for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - |  | 5.23.0 |
+| content | Content of the card | ReactNode \| () =&gt; ReactNode | - |  | × |
+| title | Title of the card | ReactNode \| () =&gt; ReactNode | - |  | × |
+| styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - |  | 5.23.0 |
+
+&lt;!-- Common API --&gt;
+
+&lt;embed src="../tooltip/shared/sharedProps.en-US.md"&gt;&lt;/embed&gt;
+
+## Note
+
+Please ensure that the child node of `Popover` accepts `onMouseEnter`, `onMouseLeave`, `onFocus`, `onClick` events.
+

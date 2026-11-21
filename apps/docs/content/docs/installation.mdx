@@ -1,0 +1,50 @@
+---
+title: Installation
+description: How to install and get started with Michael UI in your React project.
+---
+
+# Installation
+
+Install `michael-ui` into your React application using your favorite package manager.
+
+## Using pnpm (Recommended)
+
+```bash
+pnpm add michael-ui
+```
+
+## Using npm
+
+```bash
+npm install michael-ui
+```
+
+## Using yarn
+
+```bash
+yarn add michael-ui
+```
+
+## Quick Start
+
+Import components directly with full tree-shaking support:
+
+```tsx
+import React from 'react';
+import { Button, Space, message } from 'michael-ui';
+
+export default function App() {
+  const showMessage = () => {
+    message.success('Welcome to Michael UI!');
+  };
+
+  return (
+    <Space>
+      <Button type="primary" onClick={showMessage}>
+        Click Me
+      </Button>
+      <Button>Secondary</Button>
+    </Space>
+  );
+}
+```

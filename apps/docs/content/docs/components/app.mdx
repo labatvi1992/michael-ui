@@ -1,0 +1,42 @@
+---
+title: App
+description: Application wrapper for some global usages.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="app" />
+
+## Usage
+
+```tsx
+import { App } from 'michael-ui';
+
+export default () => {
+  return <App />;
+};
+```
+
+
+## When To Use
+
+- Provide reset styles based on `.ant-app` element.
+- You could use static methods of `message/notification/Modal` from `useApp` without writing `contextHolder` manually.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+&gt; This component is available since `antd@5.1.0`.
+
+### App
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| component | Config render element, if `false` will not create DOM node | ComponentType \| false | div | 5.11.0 | × |
+| message | Global config for Message | [MessageConfig](/components/message/#messageconfig) | - | 5.3.0 | × |
+| notification | Global config for Notification | [NotificationConfig](/components/notification/#notificationconfig) | - | 5.3.0 | × |
+

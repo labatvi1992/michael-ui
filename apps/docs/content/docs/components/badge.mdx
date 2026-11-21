@@ -1,0 +1,68 @@
+---
+title: Badge
+description: Small numerical value or status descriptor for UI elements.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="badge" />
+
+## Usage
+
+```tsx
+import { Badge } from 'michael-ui';
+
+export default () => {
+  return <Badge />;
+};
+```
+
+## Examples
+
+### Status Dot Badge
+
+<ComponentDemo name="badge-status" />
+
+### Ribbon Badge
+
+<ComponentDemo name="badge-ribbon" />
+
+
+## When To Use
+
+Badge normally appears in proximity to notifications or user avatars with eye-catching appeal, typically displaying unread messages count.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+### Badge
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| color | Customize Badge dot color | string | - |  | × |
+| count | Number to show in badge | ReactNode | - |  | × |
+| classNames | Customize class for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - |  | 5.7.0 |
+| dot | Whether to display a red dot instead of `count` | boolean | false |  | × |
+| offset | Set offset of the badge dot | \[number, number] | - |  | × |
+| overflowCount | Max count to show | number | 99 |  | × |
+| showZero | Whether to show badge when `count` is zero | boolean | false |  | × |
+| size | If `count` is set, `size` sets the size of badge | `medium` \| `small` | - | - | × |
+| status | Set Badge as a status dot | `success` \| `processing` \| `default` \| `error` \| `warning` | - |  | × |
+| styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - |  | 5.7.0 |
+| text | If `status` is set, `text` sets the display text of the status `dot` | ReactNode | - |  | × |
+| title | Text to show when hovering over the badge. Set to `null` or `false` to remove the native tooltip | string \| null \| false | - | 6.5.0 | × |
+
+### Badge.Ribbon
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| classNames | Customize class for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - |  | 6.0.0 |
+| color | Customize Ribbon color | string | - |  | × |
+| placement | The placement of the Ribbon, `start` and `end` follow text direction (RTL or LTR) | `start` \| `end` | `end` |  | × |
+| styles | Customize inline style for each semantic structure inside the component. Supports object or function. | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;)=&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - |  | 6.0.0 |
+| text | Content inside the Ribbon | ReactNode | - |  | × |
+

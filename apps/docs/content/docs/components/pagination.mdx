@@ -1,0 +1,63 @@
+---
+title: Pagination
+description: A long list can be divided into several pages, and only one page will be loaded at a time.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="pagination" />
+
+## Usage
+
+```tsx
+import { Pagination } from 'michael-ui';
+
+export default () => {
+  return <Pagination />;
+};
+```
+
+
+## When To Use
+
+- When it will take a long time to load/render all items.
+- If you want to browse the data by navigating through pages.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+```jsx
+<Pagination onChange={onChange} total={50} />
+```
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| align | Align | start \| center \| end | - | 5.19.0 | × |
+| classNames | Customize class for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - |  | 6.0.0 |
+| components | Customize internal components | &#123; sizeChanger?: React.ComponentType &#125; | - | 6.6.0 | × |
+| current | Current page number | number | - |  | × |
+| defaultCurrent | Default initial page number | number | 1 |  | × |
+| defaultPageSize | Default number of data items per page | number | 10 |  | × |
+| disabled | Disable pagination | boolean | - |  | × |
+| hideOnSinglePage | Whether to hide pager on single page | boolean | false |  | × |
+| itemRender | To customize item's innerHTML | (page, type: 'page' \| 'prev' \| 'next', originalElement) =&gt; React.ReactNode | - |  | × |
+| pageSize | Number of data items per page | number | - |  | × |
+| pageSizeOptions | Specify the sizeChanger options | number\[] | \[`10`, `20`, `50`, `100`] |  | × |
+| responsive | If `size` is not specified, `Pagination` would resize according to the width of the window | boolean | - |  | × |
+| showLessItems | Show less page items | boolean | false |  | × |
+| showQuickJumper | Determine whether you can jump to pages directly | boolean \| &#123; goButton: ReactNode &#125; | false |  | × |
+| showSizeChanger | Determine whether to show `pageSize` select | boolean \| [SelectProps](/components/select#api) | - | SelectProps: 5.21.0 | 4.21.0, SelectProps: 5.21.0 |
+| showTitle | Show page item's title | boolean | true |  | × |
+| showTotal | To display the total number and range | function(total, range) | - |  | × |
+| simple | Whether to use simple mode | boolean \| &#123; readOnly?: boolean &#125; | - |  | × |
+| size | Component size | `large` \| `medium` \| `small` | `medium` |  | × |
+| styles | Customize inline style for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - |  | 6.0.0 |
+| total | Total number of data items | number | 0 |  | × |
+| totalBoundaryShowSizeChanger | When `total` larger than it, `showSizeChanger` will be true | number | 50 |  | 6.2.0 |
+| onChange | Called when the page number or `pageSize` is changed. When `pageSize` changes, the third parameter `info.recommendPage` provides a recommended page number based on the new page size to help preserve the user's data position | function(page, pageSize, info?) | - | info: 6.7.0 | × |
+| onShowSizeChange | Called when `pageSize` is changed | function(current, size) | - |  | × |
+

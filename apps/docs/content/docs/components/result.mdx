@@ -1,0 +1,47 @@
+---
+title: Result
+description: Used to feedback the processing results of a series of operations.
+---
+
+## Interactive Demo
+
+Experience the live interactive demo below. Change the primary color, border radius, or toggle Dark / Compact mode from the **Theme Customizer** in the top navigation to see this component adapt in real-time.
+
+<ComponentDemo name="result" />
+
+## Usage
+
+```tsx
+import { Result } from 'michael-ui';
+
+export default () => {
+  return <Result />;
+};
+```
+
+## Examples
+
+### 404 Result Page
+
+<ComponentDemo name="result-404" />
+
+
+## When To Use
+
+Use when important operations need to inform the user to process the results and the feedback is more complicated.
+
+
+## API Reference
+
+Common props ref：[Common props](/docs/react/common-props)
+
+| Property | Description | Type | Default | Version | [Global Config](/components/config-provider#component-config) |
+| --- | --- | --- | --- | --- | --- |
+| classNames | Customize class for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | 6.0.0 | 6.0.0 |
+| extra | Operating area | ReactNode | - |  | × |
+| icon | Custom back icon | ReactNode | - |  | × |
+| status | Result status, decide icons and colors | `success` \| `error` \| `info` \| `warning` \| `404` \| `403` \| `500` | `info` |  | × |
+| styles | Customize inline style for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: &#123; props &#125;) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | 6.0.0 | 6.0.0 |
+| subTitle | The subTitle | ReactNode | - |  | × |
+| title | The title | ReactNode | - |  | × |
+
